@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>student</title>
+</head>
+<body>
+<h1>Student List</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>StudentId</th>
+    </tr>
+    <tr th:each ="obj : ${LIST}">
+        <th th:text="${obj.id}">123</th>
+        <th th:text="${obj.name}">Spring in Action</th>
+        <th th:text="${obj.studentID}">Wrox</th>
+    </tr>
+</table>
+</body>
+</html>
