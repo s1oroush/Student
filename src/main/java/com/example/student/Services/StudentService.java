@@ -12,4 +12,10 @@ public interface StudentService {
     Student saveStudent(Student student);
 
     void updateStudentById(Long studentId, Student student);
+
+    Student fetchStudentByStudentId(String studentId);
+
+    void deleteByStudentId(String studentId);
+
+    void patchStudentById(String  studentId, Student student);
 }

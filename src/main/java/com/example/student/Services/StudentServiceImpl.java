@@ -3,10 +3,14 @@ package com.example.student.Services;
 import com.example.student.Repositories.StudentRepositories;
 import com.example.student.domain.Student;
 import lombok.Builder;
+import org.camunda.commons.utils.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import static java.lang.Long.parseLong;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -24,11 +28,32 @@ public class StudentServiceImpl implements StudentService {
         if (optionalStudent.isPresent()) {
             Student existing = optionalStudent.get();
             existing.setName(student.getName());
-            existing.setStudentID(student.getStudentID());
+            existing.setStudentId(student.getStudentId());
             studentRepositories.save(existing);
         } else {
             throw new RuntimeException();
         }
+
+    }
+
+    @Override
+    public Student fetchStudentByStudentId(String studentId) {
+        Student student=studentRepositories.findByStudentId(studentId);
+        return student;
+    }
+
+    @Override
+    public void deleteByStudentId(String studentId) {
+        studentRepositories.deleteByStudentId(studentId);
+    }
+
+    @Override
+    public void patchStudentById(String  studentId, Student student) {
+        Student existing = studentRepositories.findByStudentId(studentId);
+        if(StringUtils.hasText(student.getName())){
+            existing.setName(student.getName());
+        }
+        studentRepositories.save(saveStudent(student));
 
     }
 
@@ -45,7 +70,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student saveStudent(Student student) {
         Student savedStudent = Student.builder()
-                .studentID(student.getStudentID())
+                .studentId(student.getStudentId())
                 .name(student.getName())
                 .build();
 
